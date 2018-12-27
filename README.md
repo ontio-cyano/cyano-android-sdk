@@ -1,5 +1,5 @@
 # cyano-android-sdk
-cyano-android-sdk 帮助Android webview和网页dapp纪念性通信。它对Android webview进行了一些方法的封装。  
+cyano-android-sdk 帮助Android webview和网页dapp之间通信。它对Android webview进行了一些方法的封装。  
 >webview通信的方式是window.postmeaage()
 
 ## 如何使用
