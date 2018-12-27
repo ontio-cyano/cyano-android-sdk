@@ -58,14 +58,14 @@ cyano-android-sdk 帮助Android webview和网页dapp纪念性通信。它对Andr
 
 
 #### action：SendBack
-将结果传回网页
+将结果传回网页，fastjson转换。
 ```
-	JSONObject jsonObject = new JSONObject();
-	jsonObject.put("action", "");
-	jsonObject.put("error", 0);
-	jsonObject.put("desc", "SUCCESS");
-	jsonObject.put("result",Object);
-	cyanoWebView.sendBack(Base64.encodeToString(Uri.encode(jsonObject.toString()).getBytes(), Base64.NO_WRAP));
+	Map map = new HashMap<>();
+	map.put("action", "");
+	map.put("error", 0);
+	map.put("desc", "SUCCESS");
+	map.put("result", message);
+	cyanoWebView.sendBack(Base64.encodeToString(Uri.encode(JSON.toJSONString(map)).getBytes(), Base64.NO_WRAP));
 ```
 
 ## DEMO
