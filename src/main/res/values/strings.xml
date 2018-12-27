@@ -1,7 +1,3 @@
 <resources>
     <string name="app_name">cynao</string>
-    <string name="title_wallet">Wallet</string>
-    <string name="title_ontid">Ont Id</string>
-    <string name="title_app">DApp</string>
-    <string name="title_mine">Setting</string>
 </resources>

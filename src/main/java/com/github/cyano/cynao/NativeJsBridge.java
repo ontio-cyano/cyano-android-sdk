@@ -17,6 +17,7 @@ public class NativeJsBridge {
     private HandleLogin handleLogin;
     private HandleInvoke handleInvoke;
     private HandleGetAccount handleGetAccount;
+    private HandleInvokeRead handleInvokeRead;
 
     private CyanoWebView cyanoWebView;
 
@@ -64,6 +65,11 @@ public class NativeJsBridge {
                         handleGetAccount.handleAction(result);
                     }
                     break;
+                case "invokeRead":
+                    if (handleInvokeRead != null) {
+                        handleInvokeRead.handleAction(result);
+                    }
+                    break;
                 default:
             }
         } catch (JSONException e) {
@@ -84,6 +90,10 @@ public class NativeJsBridge {
         this.handleGetAccount = handleGetAccount;
     }
 
+    public void setHandleInvokeRead(HandleInvokeRead handleInvokeRead) {
+        this.handleInvokeRead = handleInvokeRead;
+    }
+
 
     public interface HandleLogin {
         public void handleAction(String data);
@@ -97,13 +107,7 @@ public class NativeJsBridge {
         public void handleAction(String data);
     }
 
-    //Handler静态内部类 防止内存泄漏
-    private static class mHandler extends Handler {
-        WeakReference<Activity> weakReference;
-
-        public mHandler(Activity mainActivity) {
-            weakReference = new WeakReference<Activity>(mainActivity);
-        }
-
+    public interface HandleInvokeRead {
+        public void handleAction(String data);
     }
 }
