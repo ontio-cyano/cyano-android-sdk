@@ -1,23 +1,26 @@
 package com.github.cyano.cynao;
 
-import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.net.Uri;
-import android.os.Handler;
-import android.os.Message;
 import android.util.Base64;
 import android.webkit.JavascriptInterface;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.lang.ref.WeakReference;
+import static com.github.cyano.cynao.Common.CYANO_SPLIT_TAG;
+import static com.github.cyano.cynao.Common.CYANO_WEB_TAG;
+import static com.github.cyano.cynao.Common.GET_ACCOUNT;
+import static com.github.cyano.cynao.Common.INVOKE;
+import static com.github.cyano.cynao.Common.INVOKE_PASSWORD_FREE;
+import static com.github.cyano.cynao.Common.INVOKE_READ;
+import static com.github.cyano.cynao.Common.LOGIN;
 
 public class NativeJsBridge {
     private HandleLogin handleLogin;
     private HandleInvoke handleInvoke;
     private HandleGetAccount handleGetAccount;
     private HandleInvokeRead handleInvokeRead;
+    private HandleInvokePasswordFree handleInvokePasswordFree;
 
     private CyanoWebView cyanoWebView;
 
@@ -27,8 +30,8 @@ public class NativeJsBridge {
 
     @JavascriptInterface
     public void postMessage(String userInfo) {
-        if (userInfo.contains("ontprovider://ont.io")) {
-            final String[] split = userInfo.split("params=");
+        if (userInfo.contains(CYANO_WEB_TAG)) {
+            final String[] split = userInfo.split(CYANO_SPLIT_TAG);
             if (cyanoWebView != null) {
                 cyanoWebView.post(new Runnable() {
                     @Override
@@ -50,24 +53,29 @@ public class NativeJsBridge {
             jsonObject = new JSONObject(result);
             String action = jsonObject.getString("action");
             switch (action) {
-                case "login":
+                case LOGIN:
                     if (handleLogin != null) {
                         handleLogin.handleAction(result);
                     }
                     break;
-                case "invoke":
+                case INVOKE:
                     if (handleInvoke != null) {
                         handleInvoke.handleAction(result);
                     }
                     break;
-                case "getAccount":
+                case GET_ACCOUNT:
                     if (handleGetAccount != null) {
                         handleGetAccount.handleAction(result);
                     }
                     break;
-                case "invokeRead":
+                case INVOKE_READ:
                     if (handleInvokeRead != null) {
                         handleInvokeRead.handleAction(result);
+                    }
+                    break;
+                case INVOKE_PASSWORD_FREE:
+                    if (handleInvokePasswordFree != null) {
+                        handleInvokePasswordFree.handleAction(result,message);
                     }
                     break;
                 default:
@@ -94,6 +102,10 @@ public class NativeJsBridge {
         this.handleInvokeRead = handleInvokeRead;
     }
 
+    public void setHandleInvokePasswordFree(HandleInvokePasswordFree handleInvokePasswordFree) {
+        this.handleInvokePasswordFree = handleInvokePasswordFree;
+    }
+
 
     public interface HandleLogin {
         public void handleAction(String data);
@@ -110,4 +122,10 @@ public class NativeJsBridge {
     public interface HandleInvokeRead {
         public void handleAction(String data);
     }
+
+    public interface HandleInvokePasswordFree {
+        public void handleAction(String data,String message);
+    }
+
+
 }

@@ -14,13 +14,30 @@ cyano-android-sdk 帮助Android webview和网页dapp之间通信。它对Android
 	cyanoWebView.loadUrl(url);
 ```
 
+#### data
+参数data为json的字符串
+
+```
+	{"action":"login",
+	"params":
+		{
+		"type":"account",
+		"dappName":"My dapp",
+		"message":"test message",
+		"expired":"201812181000",
+		"callback":""
+		}
+	}
+```
+#### message
+参数message为网页端传来的原文数据。
 
 #### action：login
 
 ```
 	cyanoWebView.getNativeJsBridge().setHandleLogin(new NativeJsBridge.HandleLogin() {
             @Override
-            public void handleAction(final String data) {
+            public void handleAction(String data) {
 
             }
 	});
@@ -30,7 +47,7 @@ cyano-android-sdk 帮助Android webview和网页dapp之间通信。它对Android
 ```
 	cyanoWebView.getNativeJsBridge().setHandleInvoke(new NativeJsBridge.HandleInvoke() {
             @Override
-            public void handleAction(final String data) {
+            public void handleAction(String data) {
                
             }
 	});
@@ -56,6 +73,15 @@ cyano-android-sdk 帮助Android webview和网页dapp之间通信。它对Android
 	});
 ```
 
+#### action：InvokePasswordFree
+```
+	cyanoWebView.getNativeJsBridge().setHandleInvokePasswordFree(new NativeJsBridge.HandleInvokePasswordFree() {
+            @Override
+            public void handleAction(String data, String message) {
+               
+            }
+	});
+```
 
 #### action：SendBack
 将结果传回网页，fastjson转换。
