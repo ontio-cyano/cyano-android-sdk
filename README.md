@@ -59,7 +59,7 @@ cyano-android-sdk 帮助Android webview和网页dapp之间通信。它对Android
                *
                * 3.用户确认后发送交易到链上
                *
-               * 3.发送返回结果到webView
+               * 4.发送交易hash到webView
                * com.alibaba.fastjson.JSONObject reqJson = JSON.parseObject(data);
                * String action=reqJson.getString("action");
                * String version=reqJson.getString("version");
@@ -76,7 +76,7 @@ cyano-android-sdk 帮助Android webview和网页dapp之间通信。它对Android
             @Override
             public void handleAction(String data) {
               /* TODO
-               * 1.发送返回结果到webView
+               * 1.发送钱包地址到webView
                * com.alibaba.fastjson.JSONObject reqJson = JSON.parseObject(data);
                * String action=reqJson.getString("action");
                * String version=reqJson.getString("version");
@@ -95,7 +95,7 @@ cyano-android-sdk 帮助Android webview和网页dapp之间通信。它对Android
               /* TODO
                * 1.将data构建交易，预执行获取结果，注意耗时操作。
                * 
-               * 2.发送返回结果到webView
+               * 2.发送预知行结果到webView
                * com.alibaba.fastjson.JSONObject reqJson = JSON.parseObject(data);
                * String action=reqJson.getString("action");
                * String version=reqJson.getString("version");
@@ -118,7 +118,7 @@ cyano-android-sdk 帮助Android webview和网页dapp之间通信。它对Android
                *
                * 3.预知行结果不用显示给用户确认
                *
-               * 3.发送返回结果到webView
+               * 4.发送交易hash到webView
                * com.alibaba.fastjson.JSONObject reqJson = JSON.parseObject(data);
                * String action=reqJson.getString("action");
                * String version=reqJson.getString("version");
@@ -136,17 +136,21 @@ cyano-android-sdk 帮助Android webview和网页dapp之间通信。它对Android
 	* 需要错误返回时调用
 	*/
 	cyanoWebView.sendFailToWeb(action,error,version,id,result);
-```
 
-1. action：请求的action
+    action：请求的action
 
-2. version：请求的version
+    version：请求的version
 
-3. id：请求的id
+    id：请求的id
 
-5. error：失败时的[错误码](https://github.com/ontio-cyano/CEPs/blob/master/CEP1.mediawiki#Error_code)
+    error：错误码
+    
+    result：处理后的结果
+```   
 
-4. result：处理后的结果
+[错误码](https://github.com/ontio-cyano/CEPs/blob/master/CEP1.mediawiki#Error_code)
+
+  
 
 
 ## DEMO
