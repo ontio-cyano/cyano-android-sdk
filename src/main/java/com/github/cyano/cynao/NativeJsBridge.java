@@ -75,7 +75,7 @@ public class NativeJsBridge {
                     break;
                 case INVOKE_PASSWORD_FREE:
                     if (handleInvokePasswordFree != null) {
-                        handleInvokePasswordFree.handleAction(result,message);
+                        handleInvokePasswordFree.handleAction(result,new JSONObject(result).getJSONObject("params").toString());
                     }
                     break;
                 default:

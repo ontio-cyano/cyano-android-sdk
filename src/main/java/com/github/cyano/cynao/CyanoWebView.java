@@ -2,8 +2,10 @@ package com.github.cyano.cynao;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.net.http.SslError;
 import android.os.Build;
+import android.util.Base64;
 import android.util.Log;
 import android.view.ViewGroup;
 import android.webkit.JavascriptInterface;
@@ -16,11 +18,15 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.LinearLayout;
 
+import com.alibaba.fastjson.JSON;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.HashMap;
+import java.util.Map;
 
 public class CyanoWebView extends WebView {
     private static final String BRIDGE_NAME = "android";
@@ -125,7 +131,7 @@ public class CyanoWebView extends WebView {
         }
     }
 
-    public void sendBack(final String data) {
+    public void sendMessageToWeb(String data) {
         JSONObject eventInitDict = new JSONObject();
         try {
             eventInitDict.put("data", data);
@@ -133,6 +139,28 @@ public class CyanoWebView extends WebView {
             e.printStackTrace();
         }
         evaluateJavascriptWithFallback("(function () {" + "var event;" + "var data = " + eventInitDict.toString() + ";" + "try {" + "event = new MessageEvent('message', data);" + "} catch (e) {" + "event = document.createEvent('MessageEvent');" + "event.initMessageEvent('message', true, true, data.data, data.origin, data.lastEventId, data.source);" + "}" + "document.dispatchEvent(event);" + "})();");
+    }
+
+    public void sendSuccessToWeb(String action, String version, String id, Object result) {
+        Map map = new HashMap<>();
+        map.put("action", action);
+        map.put("error", 0);
+        map.put("version", version);
+        map.put("id", id);
+        map.put("desc", "SUCCESS");
+        map.put("result", result);
+        sendMessageToWeb(Base64.encodeToString(Uri.encode(JSON.toJSONString(map)).getBytes(), Base64.NO_WRAP));
+    }
+
+    public void sendFailToWeb(String action, int errorCode, String id, String version, Object result) {
+        Map map = new HashMap<>();
+        map.put("action", action);
+        map.put("error", errorCode);
+        map.put("version", version);
+        map.put("id", id);
+        map.put("desc", "SUCCESS");
+        map.put("result", result);
+        sendMessageToWeb(Base64.encodeToString(Uri.encode(JSON.toJSONString(map)).getBytes(), Base64.NO_WRAP));
     }
 
     public void destorySelf() {
