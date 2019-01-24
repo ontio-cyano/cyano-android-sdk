@@ -1,157 +1,62 @@
-# cyano-android-sdk
-cyano-android-sdk 帮助Android webview和网页dapp之间通信。它对Android webview进行了一些方法的封装。  
->webview通信的方式是window.postmeaage()
+# cyano-android-sdk-ONTID
+cyano-android-sdk 帮助钱包集成ONTID相关功能
 
 ## 如何使用
 将工程当作module导入到项目中
 
-[数据格式请参照CEP1文档](https://github.com/ontio-cyano/CEPs/blob/master/CEP1.mediawiki)
-
-#### 初始化
+#### 添加权限
  
 ```
-	CyanoWebView cyanoWebView=new CyanoWebView(context);  
-	cyanoWebView.loadUrl(url);
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.SYSTEM_OVERLAY_WINDOW" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
 ```
 
-
-#### action：login
-
+#### 注册activity
+ 
 ```
-	cyanoWebView.getNativeJsBridge().setHandleLogin(new NativeJsBridge.HandleLogin() {
-            @Override
-            public void handleAction(String data) {
-            /* TODO
-            * 1. params参数中解析出message
-            * com.alibaba.fastjson.JSONObject reqJson = JSON.parseObject(data);
-            * String message=reqJson.getJSONObject("params").getString("message");
-            *
-            * 2.弹出密码框,解出钱包account,对message进行签名，注意耗时操作。
-            *
-            * 3. 拼接返回结果，包括：publicKey、type、user message signature
-            *  JSONObject result = new JSONObject();
-            *   result.put("publickey", 钱包公钥);
-            *   result.put("type", "account");
-            *   result.put("user", 钱包地址);
-            *   result.put("message", message);
-            *   result.put("signature", 签名结果);
-            * 
-            * 4.发送返回结果到webView
-            * String action=reqJson.getString("action");
-            * String version=reqJson.getString("version");
-            * String id=reqJson.getString("id");
-            * cyanoWebView.sendSuccessToWeb(action,version, id, result);
-            */
-            }
-	});
+    <activity android:name="com.github.ont.connector.ontid.CreateOntIdActivity" />
+    <activity android:name="com.github.ont.connector.ontid.ImportOntIdActivity" />
+    <activity android:name="com.github.ont.connector.ontid.OntIdWebActivity" />
+    <activity android:name="com.github.ont.connector.ontid.TestFrameActivity" />
 ```
 
-
-#### action：Invoke
+#### 添加ONT lib
+* 将repositories的文件夹复制到工程中
+* 在工程最外部的build.gradle添加
 ```
-	cyanoWebView.getNativeJsBridge().setHandleInvoke(new NativeJsBridge.HandleInvoke() {
-            @Override
-            public void handleAction(String data) {
-              /* TODO
-               * 1.弹出密码输入框，解出钱包account，将data构建交易，对交易进行签名，预执行获取结果，注意耗时操作。
-               *
-               * 2.将预知行结果解析出Notify结果，显示手续费，如果结果中包含ONT,ONG合约地址，需显示转账金额和收款地址，
-               *
-               * 3.用户确认后发送交易到链上
-               *
-               * 4.发送交易hash到webView
-               * com.alibaba.fastjson.JSONObject reqJson = JSON.parseObject(data);
-               * String action=reqJson.getString("action");
-               * String version=reqJson.getString("version");
-               * String id=reqJson.getString("id");
-               * cyanoWebView.sendSuccessToWeb(action,version, id, 交易hash);
-               */
-            }
-	});
+allprojects {
+    repositories {
+        flatDir {
+            dirs '../repositories'
+        }
+    }
+}
+```
+* 如果钱包需要集成，在对应build.gradle文件中添加
+```
+  implementation(name: 'ontolib-release', ext: 'aar')
 ```
 
-#### action：GetAccount
+#### 照片选择
+在[build.gradle](https://github.com/ontio-cyano/cyano-android-sdk/blob/master/cyano_lib/build.gradle)修改图片选择库，当前使用得是matisse图片选择器
+
+在[com.github.ont.connector.update.ImageUtil](https://github.com/ontio-cyano/cyano-android-sdk/blob/master/cyano_lib/src/main/java/com/github/ont/connector/update/ImageUtil.java)文件中修改对应的图片处理
+
+#### 网络请求
+在[build.gradle](https://github.com/ontio-cyano/cyano-android-sdk/blob/master/cyano_lib/build.gradle)修改网络框架，当前使用得是okhttp框架
+
+在[com.github.ont.connector.update.NetUtil](https://github.com/ontio-cyano/cyano-android-sdk/blob/master/cyano_lib/src/main/java/com/github/ont/connector/update/NetUtil.java)文件中修改对应的网络请求
+
+#### 开始使用
 ```
-	cyanoWebView.getNativeJsBridge().setHandleGetAccount(new NativeJsBridge.HandleGetAccount() {
-            @Override
-            public void handleAction(String data) {
-              /* TODO
-               * 1.发送钱包地址到webView
-               * com.alibaba.fastjson.JSONObject reqJson = JSON.parseObject(data);
-               * String action=reqJson.getString("action");
-               * String version=reqJson.getString("version");
-               * String id=reqJson.getString("id");
-               * cyanoWebView.sendSuccessToWeb(action,version, id, 钱包地址);
-               */
-            }
-	});
+     startActivity(new Intent(baseActivity, TestFrameActivity.class));
 ```
-
-#### action：InvokeRead
-```
-	cyanoWebView.getNativeJsBridge().setHandleInvokeRead(new NativeJsBridge.HandleInvokeRead() {
-            @Override
-            public void handleAction(String data) {
-              /* TODO
-               * 1.将data构建交易，预执行获取结果，注意耗时操作。
-               * 
-               * 2.发送预知行结果到webView
-               * com.alibaba.fastjson.JSONObject reqJson = JSON.parseObject(data);
-               * String action=reqJson.getString("action");
-               * String version=reqJson.getString("version");
-               * String id=reqJson.getString("id");
-               * cyanoWebView.sendSuccessToWeb(action,version, id, 预知行结果);
-               */
-            }
-	});
-```
-
-#### action：InvokePasswordFree
-```
-	cyanoWebView.getNativeJsBridge().setHandleInvokePasswordFree(new NativeJsBridge.HandleInvokePasswordFree() {
-            @Override
-            public void handleAction(String data, String message) {
-              /* TODO
-               * 1.第一次操作和action：Invoke相同，同时保存password和message
-               *
-               * 2.当第二次收到相同的message时候，将用保存的密码进行签名，预知行获取结果
-               *
-               * 3.预知行结果不用显示给用户确认
-               *
-               * 4.发送交易hash到webView
-               * com.alibaba.fastjson.JSONObject reqJson = JSON.parseObject(data);
-               * String action=reqJson.getString("action");
-               * String version=reqJson.getString("version");
-               * String id=reqJson.getString("id");
-               * cyanoWebView.sendSuccessToWeb(action,version, id, 交易hash);
-               */
-            }
-	});
-```
-#### 失败返回结果
-
-
-```
-	/*
-	* 需要错误返回时调用
-	*/
-	cyanoWebView.sendFailToWeb(action,error,version,id,result);
-
-    action：请求的action
-
-    version：请求的version
-
-    id：请求的id
-
-    error：错误码
-    
-    result：处理后的结果
-```   
-
-[错误码](https://github.com/ontio-cyano/CEPs/blob/master/CEP1.mediawiki#Error_code)
-
-  
-
 
 ## DEMO
 [cyano-android](https://github.com/ontio-cyano/cyano-android)
