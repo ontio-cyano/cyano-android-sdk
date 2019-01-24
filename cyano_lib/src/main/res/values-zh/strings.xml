@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">connector</string>
+    <string name="what_is_an_ont_id">什么是ONT ID？</string>
+    <string name="ontid_info">Ontology DID（简称：ONT ID）是一个去中心化的身份标识协议，基于W3C的DID规范。协议支持各类实体包括人、组织机构、物品及内容的分布式和多样化的确权、识别、认证等协同服务。</string>
+    <string name="create_ont_id">创建ONT ID</string>
+    <string name="import_ont_id">导入ONT ID</string>
+    <string name="powered_by_ontology_blockchain">Powered by Ontology Blockchain</string>
+    <string name="ont_id_password">设置ONT ID密码</string>
+    <string name="digits">请输入6位数字密码</string>
+    <string name="confirm_password">确认密码</string>
+    <string name="re_enter_password">重复密码</string>
+    <string name="verify_your_identity">认证身份</string>
+    <string name="create_notice">只有先进行认证才可以创建ONT ID。</string>
+    <string name="create_account_policy_1">我已阅读并同意服务条款和隐私策略。</string>
+    <string name="create_account_policy_2">服务条款</string>
+    <string name="create_account_policy_3">隐私策略</string>
+    <string name="ontid_password_used">ONT ID 密码用于保护您的身份信息。</string>
+    <string name="onto_not_save">ONTO 不存储您的密码，也无法帮您找回，请务必牢记。</string>
+    <string name="import_wif">导入ONT ID私钥（WIF格式）</string>
+    <string name="what_wif">什么是私钥（WIF格式）？</string>
+    <string name="please_paste_your_private_key_wif_format_here">请输入52位的WIF文本</string>
+    <string name="import1">IMPORT</string>
+</resources>

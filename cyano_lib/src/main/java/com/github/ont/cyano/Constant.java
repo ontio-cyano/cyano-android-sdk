@@ -1,0 +1,46 @@
+package com.github.ont.cyano;
+
+public class Constant {
+
+    public static final String WALLET_FILE = "wallet file";
+    public static final String DEFAULT_ADDRESS = "default address";
+    public static final String DEFAULT_ONTID = "default ontId";
+    public static final String DEFAULT_NET = "default net";
+    public static final String ONT_ID_TRANSACTION = "ONT ID Transaction";
+    public static final String TEST_PRIVATE_NETS = "test private nets";
+
+    public static final String KEY = "key";
+    public static final String ADDRESS = "address";
+
+    public final static long ONG_TRAN = 1000000000;
+
+
+    public static final String ONT = "ont";
+
+    public static final String PAYER = "ATGJSGzm2poCB8N44BgrAccJcZ64MFf187";
+    public static final int WIF_LENGTH = 52;
+    public static final int KEY_LENGTH = 64;
+
+    /**
+     *协议
+     */
+    public static final String PRIVACY_POLICY = "https://onto.app/privacy";
+    public static final String TERMS_CONDITIONS = "https://onto.app/terms";
+    public static final String WALLET_RECEIVER_URL = "http://www.baidu.com";
+
+    public static final String LOGIN = "login";
+    public static final String INVOKE = "invoke";
+    public static final String GET_ACCOUNT = "getAccount";
+    public static final String INVOKE_READ = "invokeRead";
+    public static final String INVOKE_PASSWORD_FREE = "invokePasswordFree";
+    public static final String AUTHENTICATION = "authentication";
+    public static final String AUTHORIZATION = "authorization";
+    public static final String DECRYPT_MESSAGE = "decryptMessage";
+    public static final String CYANO_WEB_TAG = "ontprovider://ont.io";
+    public static final String CYANO_SPLIT_TAG = "params=";
+
+    //Error Code
+    public static final int PARAMS_ERROR = 80001;
+    public static final int METHOD_ERROR = 80002;
+    public static final int INTERNAL_ERROR = 80003;
+}
