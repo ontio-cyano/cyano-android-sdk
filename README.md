@@ -5,6 +5,8 @@ cyano-android-sdk 帮助Android webview和网页dapp之间通信。它对Android
 ## 如何使用
 将工程当作module导入到项目中
 
+[ONT ID使用请参考 README_ONTID.md](https://github.com/ontio-cyano/cyano-android-sdk/blob/master/README_ONTID.md)
+
 [数据格式请参照CEP1文档](https://github.com/ontio-cyano/CEPs/blob/master/CEP1.mediawiki)
 
 #### 初始化
