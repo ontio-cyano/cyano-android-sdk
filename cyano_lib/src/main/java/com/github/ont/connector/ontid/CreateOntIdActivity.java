@@ -207,7 +207,6 @@ public class CreateOntIdActivity extends CyanoBaseActivity implements View.OnCli
 
     private void createWallet(String password) {
         showLoading();
-        SPWrapper.setContext(this);
         DisposableObserver<String> observer = SDKWrapper.createIdentity(new SDKCallback() {
             @Override
             public void onSDKSuccess(String tag, Object message) {

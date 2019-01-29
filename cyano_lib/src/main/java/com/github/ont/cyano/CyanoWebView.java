@@ -153,7 +153,7 @@ public class CyanoWebView extends WebView {
         sendMessageToWeb(Base64.encodeToString(Uri.encode(JSON.toJSONString(map)).getBytes(), Base64.NO_WRAP));
     }
 
-    public void sendFailToWeb(String action, int errorCode, String id, String version, Object result) {
+    public void sendFailToWeb(String action, int errorCode, String version, String id, Object result) {
         Map map = new HashMap<>();
         map.put("action", action);
         map.put("error", errorCode);

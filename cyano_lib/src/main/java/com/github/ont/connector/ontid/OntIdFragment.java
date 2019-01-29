@@ -17,6 +17,9 @@ import com.github.ont.connector.utils.CommonUtil;
 import com.github.ont.connector.utils.SDKCallback;
 import com.github.ont.connector.utils.SDKWrapper;
 import com.github.ont.connector.utils.SPWrapper;
+import com.github.ont.connector.utils.ToastUtil;
+import com.github.ont.cyano.Constant;
+import com.github.ontio.OntSdk;
 
 
 /**
@@ -55,8 +58,8 @@ public class OntIdFragment extends CyanoBaseFragment implements View.OnClickList
         if (CommonUtil.isFastClick()) {
             int i = view.getId();
             if (i == R.id.btn_new) {
-                baseActivity.startActivity(new Intent(baseActivity, CreateOntIdActivity.class));
-//                createOntID();
+//                baseActivity.startActivity(new Intent(baseActivity, CreateOntIdActivity.class));
+                createOntID();
             } else if (i == R.id.btn_import) {
                 baseActivity.startActivity(new Intent(baseActivity, ImportOntIdActivity.class));
             }
@@ -64,6 +67,10 @@ public class OntIdFragment extends CyanoBaseFragment implements View.OnClickList
     }
 
     private void createOntID() {
+        final String defaultAccountAddress = OntSdk.getInstance().getWalletMgr().getWallet().getDefaultAccountAddress();
+        if (TextUtils.isEmpty(defaultAccountAddress)){
+            ToastUtil.showToast(baseActivity,getString(R.string.no_wallet));
+        }
         baseActivity.setGetDialogPwd(new CyanoBaseActivity.GetDialogPassword() {
             @Override
             public void handleDialog(String pwd) {
@@ -72,16 +79,18 @@ public class OntIdFragment extends CyanoBaseFragment implements View.OnClickList
                     @Override
                     public void onSDKSuccess(String tag, Object message) {
                         baseActivity.dismissLoading();
+                        SPWrapper.setDefaultOntId((String)message);
+                        initData();
                     }
 
                     @Override
                     public void onSDKFail(String tag, String message) {
                         baseActivity.dismissLoading();
                     }
-                }, TAG, "", pwd);
+                }, TAG, defaultAccountAddress, pwd);
             }
         });
-        baseActivity.showPasswordDialog("Create Identity");
+        baseActivity.showPasswordDialog(getString(R.string.enter_your_wallet_password));
 
     }
 
@@ -89,14 +98,19 @@ public class OntIdFragment extends CyanoBaseFragment implements View.OnClickList
     @Override
     public void onStart() {
         super.onStart();
-        SPWrapper.setContext(baseActivity);
+        initData();
+    }
+
+    private void initData() {
         if (TextUtils.isEmpty(SPWrapper.getDefaultOntId())) {
             layoutNoIdentity.setVisibility(View.VISIBLE);
             layoutHasIdentity.setVisibility(View.GONE);
         } else {
             layoutNoIdentity.setVisibility(View.GONE);
             layoutHasIdentity.setVisibility(View.VISIBLE);
-            startActivity(new Intent(baseActivity, OntIdWebActivity.class));
+            Intent intent = new Intent(baseActivity, OntIdWebActivity.class);
+            intent.putExtra(Constant.KEY,Constant.CYANO_MANAGER_URL+SPWrapper.getDefaultOntId());
+            startActivity(intent);
             baseActivity.finish();
         }
     }

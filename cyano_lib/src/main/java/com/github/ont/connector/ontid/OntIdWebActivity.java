@@ -22,6 +22,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
 import android.webkit.ValueCallback;
@@ -30,8 +31,10 @@ import android.webkit.WebView;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.github.ont.connector.R;
 import com.github.ont.connector.base.CyanoBaseActivity;
@@ -61,9 +64,9 @@ public class OntIdWebActivity extends CyanoBaseActivity implements View.OnClickL
     private static final int REQUEST_FACE_CODE = 104;
 
     //    protected String mUrl = "http://192.168.3.31:8080/#/mgmtHome?ontid=did:ont:Ab3nRoXwqBJxJq3batNU3a2uNfrLdtJKwW";
-    protected String mUrl = "http://192.168.3.31:8080/#/mgmtHome?ontid=" + SPWrapper.getDefaultOntId();
-//    protected String mUrl = "http://192.168.50.123:8080";
-
+//    protected String mUrl = "http://192.168.50.123:8080/#/mgmtHome?ontid=" + SPWrapper.getDefaultOntId();
+//    protected String mUrl = "http://192.168.50.123:8080/#/authHome";
+    protected String mUrl = "http://192.168.50.123:8081/#/";
     ProgressBar pg;
     FrameLayout frameLayout;
 
@@ -79,11 +82,10 @@ public class OntIdWebActivity extends CyanoBaseActivity implements View.OnClickL
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_web);
         initView();
-        initData();
         mWebView = new CyanoWebView(this);
         frameLayout.addView(mWebView);
         initWebView();
-        mWebView.loadUrl(mUrl);
+        initData();
     }
 
     private void initView() {
@@ -106,7 +108,10 @@ public class OntIdWebActivity extends CyanoBaseActivity implements View.OnClickL
             mUrl = extras.getString(Constant.KEY);
         }
         ONTID = SPWrapper.getDefaultOntId();
+        mWebView.loadUrl(mUrl);
+    }
 
+    private boolean getPermissions() {
         mPermissionList.clear();
         for (int i = 0; i < permissions.length; i++) {
             if (ContextCompat.checkSelfPermission(this, permissions[i]) != PackageManager.PERMISSION_GRANTED) {
@@ -116,7 +121,9 @@ public class OntIdWebActivity extends CyanoBaseActivity implements View.OnClickL
         if (!mPermissionList.isEmpty()) {//未授予的权限为空，表示都授予了
             String[] permissions = mPermissionList.toArray(new String[mPermissionList.size()]);//将List转为数组
             ActivityCompat.requestPermissions(this, permissions, MY_PERMISSIONS);
+            return false;
         }
+        return true;
     }
 
     @Override
@@ -128,7 +135,7 @@ public class OntIdWebActivity extends CyanoBaseActivity implements View.OnClickL
                     boolean showRequestPermission = ActivityCompat.shouldShowRequestPermissionRationale(this, permissions[i]);
                     if (showRequestPermission) {
                         ToastUtil.showToast(this, "permission refused");
-                        finish();
+//                        finish();
                     }
                 }
             }
@@ -156,12 +163,17 @@ public class OntIdWebActivity extends CyanoBaseActivity implements View.OnClickL
             public boolean onShowFileChooser(WebView webView, ValueCallback<Uri[]> filePathCallback, FileChooserParams fileChooserParams) {
 //                https://blog.csdn.net/qq_34650238/article/details/79923661
                 OntIdWebActivity.filePathCallback = filePathCallback;
-                ImageUtil.setImage(OntIdWebActivity.this);
+                if (getPermissions()) {
+                    ImageUtil.setImage(OntIdWebActivity.this);
+                } else {
+                    filePathCallback.onReceiveValue(new Uri[]{Uri.EMPTY});
+                }
                 return true;
                 //                return super.onShowFileChooser(webView, filePathCallback, fileChooserParams);
             }
 
         });
+
 
         mWebView.getNativeJsBridge().setAuthentication(new NativeJsBridge.HandleAuthentication() {
             @Override
@@ -189,7 +201,7 @@ public class OntIdWebActivity extends CyanoBaseActivity implements View.OnClickL
                 String subAction = jsonObject.getJSONObject("params").getString("subaction");
                 switch (subAction) {
                     case "requestAuthorization":
-                        handleAuthorization(data);
+                        handleRequestAuthorization(data);
                         break;
                     case "getAuthorizationInfo":
                         handleAuthorization(data);
@@ -215,6 +227,38 @@ public class OntIdWebActivity extends CyanoBaseActivity implements View.OnClickL
             }
         });
 
+
+        mWebView.getNativeJsBridge().setHandleGetIdentity(new NativeJsBridge.HandleGetIdentity() {
+            @Override
+            public void handleAction(String data) {
+                handleGetIdentity(data);
+            }
+        });
+    }
+
+    private void handleRequestAuthorization(String data) {
+//        {"action":"authorization","version":"1.0.0","params":
+//            {"subaction":"requestAuthorization","seqNo":"0001",
+//                    "userOntid":"did:ont:AL2yjtLZJmRmQ4muFiVexYcyVsYb4DkyYL",
+//                    "dappOntid":"did:ont:AL2yjtLZJmRmQ4muFiVexYcyVsYb4DkyYL",
+//                    "dappName":"candy box","callback":"http://cybox.com/callbackand"
+//                ,"dappUrl":"http://www.baidu.com/","authTemplete":"authtemplate_kyc01"},"id":"sob9y29b"}
+        JSONObject jsonObject = (JSONObject) JSONObject.parse(data);
+        params = jsonObject.getJSONObject("params");
+        params.put("subaction", "getAuthorizationInfo");
+        mWebView.loadUrl(Constant.CYANO_AUTH_URL);
+    }
+
+    private JSONObject params;
+
+    private void handleGetIdentity(String data) {
+        final JSONObject jsonObject = JSON.parseObject(data);
+        if (TextUtils.isEmpty(SPWrapper.getDefaultOntId())) {
+            startActivity(new Intent(this, CreateOntIdActivity.class));
+            finish();
+        } else {
+            mWebView.sendSuccessToWeb(jsonObject.getString("action"), jsonObject.getString("version"), jsonObject.getString("id"), SPWrapper.getDefaultOntId());
+        }
     }
 
     private void handleExport(final String data) {
@@ -227,13 +271,18 @@ public class OntIdWebActivity extends CyanoBaseActivity implements View.OnClickL
                     @Override
                     public void onSDKSuccess(String tag, Object message) {
                         dismissLoading();
-                        mWebView.sendSuccessToWeb(jsonObject.getString("action"), jsonObject.getString("version"), jsonObject.getString("id"), (String) message);
+//                        (String) message
+                        Intent intent = new Intent(OntIdWebActivity.this, ExportOntIdActivity.class);
+                        intent.putExtra(Constant.KEY, (String) message);
+                        startActivity(intent);
+                        //                        mWebView.sendSuccessToWeb(jsonObject.getString("action"), jsonObject.getString("version"), jsonObject.getString("id"), (String) message);
                     }
 
                     @Override
                     public void onSDKFail(String tag, String message) {
                         dismissLoading();
                         ToastUtil.showToast(baseActivity, message);
+                        mWebView.sendFailToWeb(jsonObject.getString("action"), com.github.ont.cyano.Constant.PARAMS_ERROR, jsonObject.getString("version"), jsonObject.getString("id"), message);
                     }
                 }, TAG, pwd);
             }
@@ -260,6 +309,7 @@ public class OntIdWebActivity extends CyanoBaseActivity implements View.OnClickL
                     public void onSDKFail(String tag, String message) {
                         dismissLoading();
                         ToastUtil.showToast(baseActivity, message);
+                        mWebView.sendFailToWeb(jsonObject.getString("action"), com.github.ont.cyano.Constant.PARAMS_ERROR, jsonObject.getString("version"), jsonObject.getString("id"), message);
                     }
                 }, TAG, pwd);
             }
@@ -324,7 +374,11 @@ public class OntIdWebActivity extends CyanoBaseActivity implements View.OnClickL
             @Override
             public void handleDialog(String pwd) {
                 final JSONObject jsonObject = JSON.parseObject(data);
-                String message = jsonObject.getJSONObject("params").getString("message");
+                JSONArray parse = jsonObject.getJSONObject("params").getJSONArray("message");
+                String[] datas = new String[parse.size()];
+                for (int i = 0; i < parse.size(); i++) {
+                    datas[i] = parse.getString(i);
+                }
                 showLoading();
                 SDKWrapper.decryptData(new SDKCallback() {
                     @Override
@@ -337,8 +391,9 @@ public class OntIdWebActivity extends CyanoBaseActivity implements View.OnClickL
                     public void onSDKFail(String tag, String message) {
                         dismissLoading();
                         ToastUtil.showToast(baseActivity, message);
+                        mWebView.sendFailToWeb(jsonObject.getString("action"), com.github.ont.cyano.Constant.PARAMS_ERROR, jsonObject.getString("version"), jsonObject.getString("id"), message);
                     }
-                }, TAG, message, pwd);
+                }, TAG, datas, pwd);
             }
         });
         showPasswordDialog("Decrypt Message");
@@ -346,15 +401,21 @@ public class OntIdWebActivity extends CyanoBaseActivity implements View.OnClickL
 
     private void handleAuthorization(String data) {
         JSONObject jsonObject = JSON.parseObject(data);
-        JSONObject map = new JSONObject();
-        map.put("subaction", "getAuthorizationInfo");
-        map.put("seqno", "0001");
-        map.put("user_ontid", ONTID);
-        map.put("app_ontid", ONTID);
-        map.put("to_ontid", ONTID);
-        map.put("callback", "http://candybox.com/");
-        map.put("auth_templete", "authtemplate_kyc01");
-        mWebView.sendSuccessToWeb(jsonObject.getString("action"), jsonObject.getString("version"), jsonObject.getString("id"), map);
+//        JSONObject map = new JSONObject();
+//        map.put("subaction", "getAuthorizationInfo");
+//        map.put("seqNo", "0001");
+//        map.put("userOntid", ONTID);
+//        map.put("dappOntid", ONTID);
+//        map.put("dappName", "Candy Box");
+//        map.put("callback", "http://candybox.com/callback");
+//        map.put("dappUrl", "http://www.baidu.com/");
+//        map.put("authTemplate", "authtemplate_kyc01");
+        if (params == null) {
+            //TODO error
+            mWebView.sendFailToWeb(jsonObject.getString("action"), com.github.ont.cyano.Constant.PARAMS_ERROR, jsonObject.getString("version"), jsonObject.getString("id"), com.github.ont.cyano.Constant.PARAMS_ERROR);
+            return;
+        }
+        mWebView.sendSuccessToWeb(jsonObject.getString("action"), jsonObject.getString("version"), jsonObject.getString("id"), params);
     }
 
     private void handleSubmit(final String data) {
@@ -370,7 +431,7 @@ public class OntIdWebActivity extends CyanoBaseActivity implements View.OnClickL
             @Override
             public void handleFailResponse(String data) {
                 dismissLoading();
-                mWebView.sendSuccessToWeb(jsonObject.getString("action"), jsonObject.getString("version"), jsonObject.getString("id"), false);
+                mWebView.sendFailToWeb(jsonObject.getString("action"), com.github.ont.cyano.Constant.PARAMS_ERROR, jsonObject.getString("version"), jsonObject.getString("id"), data);
             }
         });
         //钱包服务器地址
@@ -404,11 +465,11 @@ public class OntIdWebActivity extends CyanoBaseActivity implements View.OnClickL
     public void onClick(View view) {
         int i = view.getId();
         if (i == R.id.layout_back) {
-//            if (mWebView.canGoBack()) {
-//                mWebView.goBack();
-//            } else {
-//            }
-            finish();
+            if (mWebView.canGoBack()) {
+                mWebView.goBack();
+            } else {
+                finish();
+            }
         } else if (i == R.id.layout_finish) {
             finish();
         }

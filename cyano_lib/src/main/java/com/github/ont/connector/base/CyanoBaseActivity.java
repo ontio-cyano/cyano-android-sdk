@@ -64,6 +64,7 @@ public abstract class CyanoBaseActivity extends AppCompatActivity {
         ClipData clip = ClipData.newPlainText("key", data);
         // Set the clipboard's primary clip.
         clipboard.setPrimaryClip(clip);
+        ToastUtil.showToast(this, des);
     }
 
     private GetDialogPassword getDialogPassword;
@@ -106,7 +107,6 @@ public abstract class CyanoBaseActivity extends AppCompatActivity {
             passwordDialog.dismiss();
         }
     }
-
 
 
     public static class MyHandle extends Handler {

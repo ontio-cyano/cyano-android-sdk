@@ -13,6 +13,7 @@ import static com.github.ont.cyano.Constant.CYANO_SPLIT_TAG;
 import static com.github.ont.cyano.Constant.CYANO_WEB_TAG;
 import static com.github.ont.cyano.Constant.DECRYPT_MESSAGE;
 import static com.github.ont.cyano.Constant.GET_ACCOUNT;
+import static com.github.ont.cyano.Constant.GET_IDENTITY;
 import static com.github.ont.cyano.Constant.INVOKE;
 import static com.github.ont.cyano.Constant.INVOKE_PASSWORD_FREE;
 import static com.github.ont.cyano.Constant.INVOKE_READ;
@@ -27,6 +28,8 @@ public class NativeJsBridge {
     private HandleGetAccount handleGetAccount;
     private HandleInvokeRead handleInvokeRead;
     private HandleInvokePasswordFree handleInvokePasswordFree;
+    private HandleGetIdentity handleGetIdentity;
+
 
     private CyanoWebView cyanoWebView;
 
@@ -99,6 +102,11 @@ public class NativeJsBridge {
                         handleDecryptMessage.handleAction(result);
                     }
                     break;
+                case GET_IDENTITY:
+                    if (handleGetIdentity != null) {
+                        handleGetIdentity.handleAction(result);
+                    }
+                    break;
                 default:
             }
         } catch (JSONException e) {
@@ -129,6 +137,15 @@ public class NativeJsBridge {
 
     public interface HandleDecryptMessage {
         public void handleAction(String data);
+    }
+
+    public interface HandleGetIdentity {
+        public void handleAction(String data);
+    }
+
+
+    public void setHandleGetIdentity(HandleGetIdentity handleGetIdentity) {
+        this.handleGetIdentity = handleGetIdentity;
     }
 
     public void setHandleLogin(HandleLogin handleLogin) {

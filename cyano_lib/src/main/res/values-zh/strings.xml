@@ -1,5 +1,4 @@
 <resources>
-    <string name="app_name">connector</string>
     <string name="what_is_an_ont_id">什么是ONT ID？</string>
     <string name="ontid_info">Ontology DID（简称：ONT ID）是一个去中心化的身份标识协议，基于W3C的DID规范。协议支持各类实体包括人、组织机构、物品及内容的分布式和多样化的确权、识别、认证等协同服务。</string>
     <string name="create_ont_id">创建ONT ID</string>
@@ -19,5 +18,13 @@
     <string name="import_wif">导入ONT ID私钥（WIF格式）</string>
     <string name="what_wif">什么是私钥（WIF格式）？</string>
     <string name="please_paste_your_private_key_wif_format_here">请输入52位的WIF文本</string>
-    <string name="import1">IMPORT</string>
+    <string name="import1">导入</string>
+    <string name="enter_your_ont_id_password">请输入ONT ID密码</string>
+    <string name="export_ontid">导出ONT ID</string>
+    <string name="wif_info">请在安全环境下保存私钥 (WIF 格式)</string>
+    <string name="what_is_private_key_wif_format">什么是私钥(WIF 格式)?</string>
+    <string name="copy">复制</string>
+    <string name="wif_copied">WIF 已复制!</string>
+    <string name="enter_your_wallet_password">请输入您得钱包密码</string>
+    <string name="no_wallet">没有ONT 钱包</string>
 </resources>

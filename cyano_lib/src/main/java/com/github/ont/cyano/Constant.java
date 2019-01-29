@@ -27,6 +27,11 @@ public class Constant {
     public static final String PRIVACY_POLICY = "https://onto.app/privacy";
     public static final String TERMS_CONDITIONS = "https://onto.app/terms";
     public static final String WALLET_RECEIVER_URL = "http://www.baidu.com";
+    public static final String CYANO_AUTH_URL = "https://auth.ont.io/#/authHome";
+    public static final String CYANO_MANAGER_URL = "https://auth.ont.io/#/mgmtHome?ontid=";
+
+    public static final String WHAT_WIF_URL_EN = "https://info.onto.app/#/detail/90";
+    public static final String WHAT_WIF_URL_CN = "https://info.onto.app/#/detail/87";
 
     public static final String LOGIN = "login";
     public static final String INVOKE = "invoke";
@@ -36,6 +41,7 @@ public class Constant {
     public static final String AUTHENTICATION = "authentication";
     public static final String AUTHORIZATION = "authorization";
     public static final String DECRYPT_MESSAGE = "decryptMessage";
+    public static final String GET_IDENTITY = "getIdentity";
     public static final String CYANO_WEB_TAG = "ontprovider://ont.io";
     public static final String CYANO_SPLIT_TAG = "params=";
 

@@ -21,7 +21,7 @@
                 android:layout_height="100dp"
                 android:layout_gravity="center"
                 android:layout_marginTop="30dp"
-                android:src="@drawable/logo" />
+                android:src="@drawable/cynao_logo" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -50,7 +50,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:layout_marginLeft="58dp"
-                android:layout_marginTop="50dp"
+                android:layout_marginTop="150dp"
                 android:gravity="center"
                 android:layout_marginRight="58dp"
                 android:background="@color/colorBlack"
@@ -71,7 +71,8 @@
                 android:text="@string/import_ont_id"
                 android:textColor="@color/colorBlack"
                 android:textSize="18sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:visibility="gone"/>
 
             <TextView
                 android:layout_width="match_parent"

@@ -27,7 +27,7 @@ public class SDKWrapper {
     private static OntSdk ontSdk = OntSdk.getInstance();
 
 
-    public static void initOntSDK(final SDKCallback callback, final String tag, final String restUrl, final SharedPreferences path) {
+    public static void initOntSDK(final String restUrl, final SharedPreferences path) {
         try {
             ontSdk.setRestful(restUrl);
             ontSdk.setDefaultConnect(ontSdk.getRestful());
@@ -106,20 +106,16 @@ public class SDKWrapper {
     }
 
 
-    public static void decryptData(final SDKCallback callback, final String tag, final String data, final String pwd) {
+    public static void decryptData(final SDKCallback callback, final String tag, final String[] data, final String pwd) {
         Observable.create(new ObservableOnSubscribe<String>() {
             @Override
             public void subscribe(ObservableEmitter<String> emitter) throws Exception {
-//                JSONArray parse = (JSONArray) JSONArray.parse(data);
-//                String[] datas = new String[parse.size()];
-//                for (int i = 0; i < parse.size(); i++) {
-//                    datas[i] = parse.getString(i);
-//                }
-                String[] datas = new String[]{"a2a67823772705704ec8620baad6eedc", "04048c3ca9837d8217970d750890e1dcd0454223ac1159550d91573eba11be12e6bcb749bb3fbbc61c2522708844cf35091ab43994f38c8cb4d5ee96e3c4f112f1", "ee7c7fe6cfe8fefb898b55ac86fd3ac2"};
+
+//                String[] datas = new String[]{"a2a67823772705704ec8620baad6eedc", "04048c3ca9837d8217970d750890e1dcd0454223ac1159550d91573eba11be12e6bcb749bb3fbbc61c2522708844cf35091ab43994f38c8cb4d5ee96e3c4f112f1", "ee7c7fe6cfe8fefb898b55ac86fd3ac2"};
                 Identity identity = ontSdk.getWalletMgr().getWallet().getIdentity(SPWrapper.getDefaultOntId());
                 Account account = ontSdk.getWalletMgr().getAccount(SPWrapper.getDefaultOntId(), pwd, identity.controls.get(0).getSalt());
                 String s = account.exportWif();
-                byte[] decrypt = ECIES.Decrypt(account, datas);
+                byte[] decrypt = ECIES.Decrypt(account, data);
                 emitter.onNext(new String(decrypt));
                 emitter.onComplete();
             }
