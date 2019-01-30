@@ -1,4 +1,4 @@
-# cyano-android-sdk
+# cyano-android-sdk [中文版](https://github.com/ontio-cyano/cyano-android-sdk/blob/master/README_CN.md)
 cyano-android-sdk 帮助Android webview和网页dapp之间通信。它对Android webview进行了一些方法的封装。  
 >webview通信的方式是window.postmeaage()
 
@@ -12,7 +12,7 @@ cyano-android-sdk 帮助Android webview和网页dapp之间通信。它对Android
 # 集成
 将工程当作module导入到项目中
 
-[数据格式请参照CEP1文档](https://github.com/ontio-cyano/CEPs/blob/master/CEP1.mediawiki)
+[数据格式请参照CEP1文档](https://github.com/ontio-cyano/CEPs/blob/master/CEPS/CEP1.mediawiki)
 
 ## WALLET
 
@@ -160,6 +160,112 @@ cyano-android-sdk 帮助Android webview和网页dapp之间通信。它对Android
 [错误码](https://github.com/ontio-cyano/CEPs/blob/master/CEP1.mediawiki#Error_code)
 
 ## ONTID_如何使用
+
+* ONT ID认证
+
+```
+  mWebView.getNativeJsBridge().setAuthentication(new NativeJsBridge.HandleAuthentication() {
+            @Override
+            public void handleAction(String data) {
+                JSONObject jsonObject = JSON.parseObject(data);
+                String subAction = jsonObject.getJSONObject("params").getString("subaction");
+                switch (subAction) {
+                    case "getIdentity":
+              /* TODO
+               * 1.发送ONT_ID到webView
+               * com.alibaba.fastjson.JSONObject reqJson = JSON.parseObject(data);
+               * String action=reqJson.getString("action");
+               * String version=reqJson.getString("version");
+               * String id=reqJson.getString("id");
+               * cyanoWebView.sendSuccessToWeb(action,version, id, ONT_ID);
+               */
+                        break;
+                    case "submit":
+              /* TODO
+               * 1.将H5返回的内容发到钱包后台
+               * 2.将发送结果进行返回
+               * com.alibaba.fastjson.JSONObject reqJson = JSON.parseObject(data);
+               * String action=reqJson.getString("action");
+               * String version=reqJson.getString("version");
+               * String id=reqJson.getString("id");
+               * cyanoWebView.sendSuccessToWeb(action,version, id, true);
+               */
+                        break;
+                    case "getRegistryOntidTx":
+              /* TODO
+               * 1.发送保存的ONT_ID交易到webView
+               * com.alibaba.fastjson.JSONObject reqJson = JSON.parseObject(data);
+               * String action=reqJson.getString("action");
+               * String version=reqJson.getString("version");
+               * String id=reqJson.getString("id");
+               * cyanoWebView.sendSuccessToWeb(action,version, id, ONT_ID交易内容);
+               */
+                        break;
+                    default:
+                }
+            }
+        });
+```
+
+* ONT ID授权
+
+```
+
+        mWebView.getNativeJsBridge().setAuthorization(new NativeJsBridge.HandleAuthorization() {
+            @Override
+            public void handleAction(String data) {
+                JSONObject jsonObject = JSON.parseObject(data);
+                String subAction = jsonObject.getJSONObject("params").getString("subaction");
+                switch (subAction) {
+                    case "requestAuthorization":
+              /* TODO
+               * 1.保存收到的数据,并跳转到授权界面
+               * mWebView.loadUrl(Constant.CYANO_AUTH_URL);
+               */
+                        break;
+                    case "getAuthorizationInfo":
+              /* TODO
+               * 1.将保存数据中的subaction改成getAuthorizationInfo
+               * 
+               * 2.将结果进行返回
+               * com.alibaba.fastjson.JSONObject reqJson = JSON.parseObject(data);
+               * String action=reqJson.getString("action");
+               * String version=reqJson.getString("version");
+               * String id=reqJson.getString("id");
+               * cyanoWebView.sendSuccessToWeb(action,version, id, 保存的数据);
+               */
+                        break;
+                    case "decryptClaim":
+               /* TODO
+               * 1.弹出密码框，处理加密的数据
+               *  JSONArray parse = jsonObject.getJSONObject("params").getJSONArray("message");
+               * String[] datas = new String[parse.size()];
+               * for (int i = 0; i < parse.size(); i++) {
+                    datas[i] = parse.getString(i);
+               * }
+               *
+               * 2.解密，得到解密结果
+               *
+               * 2.将结果进行返回
+               * com.alibaba.fastjson.JSONObject reqJson = JSON.parseObject(data);
+               * String action=reqJson.getString("action");
+               * String version=reqJson.getString("version");
+               * String id=reqJson.getString("id");
+               * cyanoWebView.sendSuccessToWeb(action,version, id, 解密结果);
+               */
+                        break;
+                    case "deleteOntid":
+              /* TODO
+               * 1.弹出密码框，校验ONT ID的密码
+               * 
+               * 2.密码成功后删除本地ONT ID，关闭页面
+               */
+                        break;
+                    default:
+                }
+            }
+        });
+```
 
 ## ONTID_快速集成
 我们已经对ONT ID相关处理进行了封装，如果对页面没有定制话需求可以直接使用
