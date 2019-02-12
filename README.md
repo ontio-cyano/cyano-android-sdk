@@ -1,4 +1,6 @@
-# cyano-android-sdk [中文版](https://github.com/ontio-cyano/cyano-android-sdk/blob/master/README_CN.md)
+English | [中文](README_CN.md)
+
+# cyano-android-sdk
 cyano-android-sdk helps to communicate between Android webview and dapp.  It encapsulates some methods for Android webview.  
 >webview communication is done by window.postmessage()
 
@@ -157,7 +159,7 @@ Import the project as a module into the project
     result：The results after treatment
 ```   
 
-[Error code](https://github.com/ontio-cyano/CEPs/blob/master/CEP1.mediawiki#Error_code)
+[Error code](https://github.com/ontio-cyano/CEPs/blob/master/CEPS/CEP1.mediawiki#error-code)
 
 ## How to use ONTID
 
