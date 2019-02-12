@@ -35,7 +35,7 @@ Import the project as a module into the project
             * com.alibaba.fastjson.JSONObject reqJson = JSON.parseObject(data);
             * String message=reqJson.getJSONObject("params").getString("message");
             *
-            * 2.Pop up the password box, unscramble the wallet account, sign the message, and pay attention to the time-consuming operation.
+            * 2.Show the password dialog, unscramble the wallet account, sign the message, and pay attention to the time-consuming operation.
             *
             * 3. Stitching Return Results，Include：publicKey、type、user message signature
             *  JSONObject result = new JSONObject();
@@ -62,7 +62,7 @@ Import the project as a module into the project
             @Override
             public void handleAction(String data) {
               /* TODO
-               * 1.Pop up the password input box, unscramble the wallet account, construct the transaction with data, sign the transaction, pre-execute the acquisition results, and pay attention to time-consuming operation.
+               * 1.Show the password dialog, unscramble the wallet account, construct the transaction with data, sign the transaction, pre-execute the acquisition results, and pay attention to time-consuming operation.
                *
                * 2.Resolve the result of the forecasting bank to the Notify result and display the handling fee. If the result contains the ONT and ONG contract address, the transfer amount and the receipt address should be displayed.
                *
@@ -237,7 +237,7 @@ Import the project as a module into the project
                         break;
                     case "decryptClaim":
                /* TODO
-               * 1.Pop up the password box to process encrypted data
+               * 1.Show the password dialog to process encrypted data
                *  JSONArray parse = jsonObject.getJSONObject("params").getJSONArray("message");
                * String[] datas = new String[parse.size()];
                * for (int i = 0; i < parse.size(); i++) {
@@ -315,23 +315,23 @@ If the wallet needs integration, add it to the corresponding build. gradle file
 
 * Photo selection
 
-[build.gradle](https://github.com/ontio-cyano/cyano-android-sdk/blob/master/cyano_lib/build.gradle)Modify the Picture Selector Library, which is currently used by Matisse Picture Selector
+Modify the Picture Selector Library in [build.gradle](https://github.com/ontio-cyano/cyano-android-sdk/blob/master/cyano_lib/build.gradle), which is currently used by Matisse Picture Selector
 
-[com.github.ont.connector.update.ImageUtil](https://github.com/ontio-cyano/cyano-android-sdk/blob/master/cyano_lib/src/main/java/com/github/ont/connector/update/ImageUtil.java)Modify the corresponding image processing in the file
+Modify the corresponding image processing in [com.github.ont.connector.update.ImageUtil](https://github.com/ontio-cyano/cyano-android-sdk/blob/master/cyano_lib/src/main/java/com/github/ont/connector/update/ImageUtil.java)
 
 * Network request
 
-[build.gradle](https://github.com/ontio-cyano/cyano-android-sdk/blob/master/cyano_lib/build.gradle)Modify the network framework, currently using okhttp framework
+Modify the network framework in [build.gradle](https://github.com/ontio-cyano/cyano-android-sdk/blob/master/cyano_lib/build.gradle), currently using okhttp framework
 
-[com.github.ont.connector.update.NetUtil](https://github.com/ontio-cyano/cyano-android-sdk/blob/master/cyano_lib/src/main/java/com/github/ont/connector/update/NetUtil.java)Modify the corresponding network request in the file
+Modify the corresponding network request in [com.github.ont.connector.update.NetUtil](https://github.com/ontio-cyano/cyano-android-sdk/blob/master/cyano_lib/src/main/java/com/github/ont/connector/update/NetUtil.java)
 
 * Setting the storage path of wallet file
 
-[Constant](https://github.com/ontio-cyano/cyano-android-sdk/blob/master/cyano_lib/src/main/java/com/github/ont/cyano/Constant.java)Modify the WALLET_FILE fields so that ont SDK stores wallet files with the same path
+Modify the WALLET_FILE fields in [Constant](https://github.com/ontio-cyano/cyano-android-sdk/blob/master/cyano_lib/src/main/java/com/github/ont/cyano/Constant.java) so that ont SDK stores wallet files with the same path
 
 * Setting the Receive Address of the Server
 
-[Constant](https://github.com/ontio-cyano/cyano-android-sdk/blob/master/cyano_lib/src/main/java/com/github/ont/cyano/Constant.java)Modify the WALLET_RECEIVER_URL field and return [authenticationId](https://github.com/ontio-cyano/integration-docs/blob/master/%E9%92%B1%E5%8C%85%E5%AF%B9%E6%8E%A5-OntId%E8%AE%A4%E8%AF%81.md),submit to the wallet server.
+Modify the WALLET_RECEIVER_URL field in [Constant](https://github.com/ontio-cyano/cyano-android-sdk/blob/master/cyano_lib/src/main/java/com/github/ont/cyano/Constant.java) and return [authenticationId](https://github.com/ontio-cyano/integration-docs/blob/master/%E9%92%B1%E5%8C%85%E5%AF%B9%E6%8E%A5-OntId%E8%AE%A4%E8%AF%81.md),submit to the wallet server.
 
 * start-up
 
@@ -342,7 +342,7 @@ Start the ONT ID interface, the private key of ONT ID, password and ONT default 
         String defaultAccountAddress = OntSdk.getInstance().getWalletMgr().getWallet().getDefaultAccountAddress();
 
         if (TextUtils.isEmpty(defaultAccountAddress)) {
-        //TODO 未创建钱包的处理
+        //TODO Handling of Uncreated Wallet
         } else {
                     Intent intent = new Intent(baseActivity, TestFrameActivity.class);
                     startActivity(intent);
