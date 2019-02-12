@@ -1,4 +1,4 @@
-[中文] | English (README.md)
+中文 | [English](README.md)
 
 # cyano-android-sdk
 cyano-android-sdk 帮助Android webview和网页dapp之间通信。它对Android webview进行了一些方法的封装。  
