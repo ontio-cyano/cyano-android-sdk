@@ -43,6 +43,8 @@ public class CyanoWebView extends WebView {
     }
 
     private void initView(Context context) {
+        setWebContentsDebuggingEnabled(true);
+
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         setLayoutParams(params);
         WebSettings webSetting = getSettings();

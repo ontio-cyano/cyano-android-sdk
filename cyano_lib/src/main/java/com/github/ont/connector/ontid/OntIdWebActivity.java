@@ -184,6 +184,9 @@ public class OntIdWebActivity extends CyanoBaseActivity implements View.OnClickL
                     case "faceRecognition":
                         handleFaceRecognition(data);
                         break;
+                    case "getIdentity":
+                        handleGetIdentity(data);
+                        break;
                     case "submit":
                         handleSubmit(data);
                         break;
@@ -254,11 +257,40 @@ public class OntIdWebActivity extends CyanoBaseActivity implements View.OnClickL
     private void handleGetIdentity(String data) {
         final JSONObject jsonObject = JSON.parseObject(data);
         if (TextUtils.isEmpty(SPWrapper.getDefaultOntId())) {
-            startActivity(new Intent(this, CreateOntIdActivity.class));
-            finish();
+//            startActivity(new Intent(this, CreateOntIdActivity.class));
+//            finish();
+            createOntID();
         } else {
             mWebView.sendSuccessToWeb(jsonObject.getString("action"), jsonObject.getString("version"), jsonObject.getString("id"), SPWrapper.getDefaultOntId());
         }
+    }
+
+    private void createOntID() {
+        final String defaultAccountAddress = OntSdk.getInstance().getWalletMgr().getWallet().getDefaultAccountAddress();
+        if (TextUtils.isEmpty(defaultAccountAddress)) {
+            ToastUtil.showToast(baseActivity, getString(R.string.no_wallet));
+        }
+        setGetDialogPwd(new CyanoBaseActivity.GetDialogPassword() {
+            @Override
+            public void handleDialog(String pwd) {
+                showLoading();
+                SDKWrapper.createIdentityWithAccount(new SDKCallback() {
+                    @Override
+                    public void onSDKSuccess(String tag, Object message) {
+                        dismissLoading();
+                        SPWrapper.setDefaultOntId((String) message);
+                        mWebView.loadUrl(Constant.CYANO_MANAGER_URL + SPWrapper.getDefaultOntId());
+                    }
+
+                    @Override
+                    public void onSDKFail(String tag, String message) {
+                        dismissLoading();
+                    }
+                }, TAG, defaultAccountAddress, pwd);
+            }
+        });
+        showPasswordDialog(getString(R.string.enter_your_wallet_password));
+
     }
 
     private void handleExport(final String data) {

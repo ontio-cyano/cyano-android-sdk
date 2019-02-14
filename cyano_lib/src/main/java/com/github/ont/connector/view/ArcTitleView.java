@@ -20,6 +20,7 @@ import android.content.res.TypedArray;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -45,7 +46,7 @@ public class ArcTitleView extends RelativeLayout {
     public ArcTitleView(final Context context, AttributeSet attrs) {
         super(context, attrs);
         LayoutInflater.from(context).inflate(R.layout.title_arc, this, true);
-        RelativeLayout layoutBack = (RelativeLayout) findViewById(R.id.layout_back);
+        LinearLayout layoutBack = (LinearLayout) findViewById(R.id.layout_back);
         TextView tvName = (TextView) findViewById(R.id.tv_name);
         TypedArray attributes = context.obtainStyledAttributes(attrs, R.styleable.arkTitle);
         if (attributes != null) {

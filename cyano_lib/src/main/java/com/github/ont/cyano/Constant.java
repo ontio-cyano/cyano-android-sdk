@@ -29,6 +29,8 @@ public class Constant {
     public static final String WALLET_RECEIVER_URL = "http://www.baidu.com";
     public static final String CYANO_AUTH_URL = "https://auth.ont.io/#/authHome";
     public static final String CYANO_MANAGER_URL = "https://auth.ont.io/#/mgmtHome?ontid=";
+    public static final String CYANO_VERSION_URL = "http://101.132.193.149:4027/cyanoversion";
+    public static final String CYANO_DOWNLOAD_URL = "http://101.132.193.149/files/app-debug.apk";
 
     public static final String WHAT_WIF_URL_EN = "https://info.onto.app/#/detail/90";
     public static final String WHAT_WIF_URL_CN = "https://info.onto.app/#/detail/87";

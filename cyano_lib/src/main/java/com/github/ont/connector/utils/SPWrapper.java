@@ -6,6 +6,8 @@ import android.text.TextUtils;
 
 import com.github.ont.cyano.Constant;
 import com.github.ontio.OntSdk;
+import com.github.ontio.common.Common;
+import com.github.ontio.sdk.wallet.Identity;
 import com.github.ontio.sdk.wallet.Wallet;
 
 import org.json.JSONArray;
@@ -33,7 +35,12 @@ public class SPWrapper {
                 e.printStackTrace();
             }
         }
-        return wallet.getDefaultOntid();
+        String ontid = String.format("%s%s", Common.didont, wallet.getDefaultAccountAddress());
+        Identity identity = wallet.getIdentity(ontid);
+        if (identity==null){
+            return "";
+        }
+        return identity.ontid;
 //        return getSharedPreferences().getString(Constant.DEFAULT_ONTID, "");
     }
 

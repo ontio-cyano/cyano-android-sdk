@@ -26,6 +26,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -51,7 +52,8 @@ public class PasswordDialog extends Dialog implements View.OnClickListener {
     private TextView tvPwdConfirm;
     private TextView tvDes;
 
-    private PasswordEditText editText;
+//    private PasswordEditText editText;
+    private EditText editText;
     private Context context;
 
     public PasswordDialog(@NonNull Context context) {
@@ -164,7 +166,7 @@ public class PasswordDialog extends Dialog implements View.OnClickListener {
 
         } else if (id == R.id.confirm_pwd) {
             if (null != listener) {
-                listener.passwordConfirm(editText.getResult());
+                listener.passwordConfirm(editText.getText().toString());
             }
 
         } else {
