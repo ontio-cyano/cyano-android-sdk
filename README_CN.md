@@ -9,7 +9,7 @@ cyano-android-sdk 帮助Android webview和网页dapp之间通信。它对Android
     * [如何使用](#ONTID_如何使用)
     * [快速集成](#ONTID_快速集成)
 * [DEMO](#demo)
-* [下载地址](#Download)
+* [DEMO 下载地址](#DEMO 下载地址)
 
 # 集成
 将工程当作module导入到项目中
@@ -355,7 +355,7 @@ ONT ID只允许创建一个
 ## DEMO
 [cyano-android](https://github.com/ontio-cyano/cyano-android)
 
-## Download
+## DEMO 下载地址
 [点我下载](http://101.132.193.149/files/app-debug.apk)
 
 ## 版本
