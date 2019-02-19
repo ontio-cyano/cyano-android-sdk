@@ -5,9 +5,9 @@ cyano-android-sdk helps to communicate between Android webview and dapp.  It enc
 >webview communication is done by window.postmessage()
 
 * [WALLET](#WALLET)
-* ONTID
-    * [How to use](#How to use ONTID)
-    * [Rapid integration](#ONTID Rapid integration)
+* ONTID   (NOT SUPPORT)
+    * [How to use](#How_to_use_ONTID)
+    * [Rapid integration](#ONTID_Rapid_integration)
 * [DEMO](#demo)
 * [Download links](#Download)
 
@@ -161,7 +161,7 @@ Import the project as a module into the project
 
 [Error code](https://github.com/ontio-cyano/CEPs/blob/master/CEPS/CEP1.mediawiki#error-code)
 
-## How to use ONTID
+## How_to_use_ONTID
 
 * ONT ID Authentication
 
@@ -269,7 +269,7 @@ Import the project as a module into the project
         });
 ```
 
-## ONTID Rapid integration
+## ONTID_Rapid_integration
 We have encapsulated the ONT ID related processing and can use it directly if there is no customized page.
 
 * add permission
