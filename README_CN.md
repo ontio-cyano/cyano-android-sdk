@@ -5,19 +5,19 @@ cyano-android-sdk 帮助Android webview和网页dapp之间通信。它对Android
 >webview通信的方式是window.postmeaage()
 
 * [安装 provider sdk](#安装-provider-sdk)
-* [钱包如何集成provider sdk](#钱包如何集成provider-sdk)
-* 钱包如何集成ONTID认证授权 (暂不支持)
+* [钱包如何集成 provider sdk基本功能](#钱包如何集成-provider-sdk-基本功能)
+* 钱包如何集成ONTID认证授权,暂不支持
     * [如何使用](#ONTID_如何使用)
     * [快速集成](#ONTID_快速集成)
-* [钱包演示](#钱包演示)
+* [演示钱包](#演示钱包)
     * [钱包下载](#钱包下载)
 
 ## 安装 provider sdk
 请将工程当作module导入到您的钱包项目中，交互协议请参照[CEP1文档](https://github.com/ontio-cyano/CEPs/blob/master/CEPS/CEP1.mediawiki)
 
-## 钱包如何集成provider sdk
+## 钱包如何集成 provider sdk 基本功能
 
-* 初始化
+* provider sdk初始化
  
 ```
 	CyanoWebView cyanoWebView=new CyanoWebView(context);  
@@ -160,7 +160,7 @@ cyano-android-sdk 帮助Android webview和网页dapp之间通信。它对Android
 
 [错误码描述](https://github.com/ontio-cyano/CEPs/blob/master/CEP1.mediawiki#Error_code)
 
-## 钱包如何集成ONTID认证授权 (暂不支持)
+## 钱包如何集成ONTID认证授权,暂不支持
 
 ### ONTID_如何使用
 
