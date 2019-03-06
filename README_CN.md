@@ -1,22 +1,21 @@
 中文 | [English](README.md)
 
-# cyano-android-sdk
+# cyano-android-provider-sdk v0.0.1
 cyano-android-sdk 帮助Android webview和网页dapp之间通信。它对Android webview进行了一些方法的封装。  
 >webview通信的方式是window.postmeaage()
 
-* [WALLET](#WALLET)
-* ONTID (暂不支持)
+* [安装 provider sdk](#安装-provider-sdk)
+* [钱包如何集成provider sdk](#钱包如何集成provider-sdk)
+* 钱包如何集成ONTID认证授权 (暂不支持)
     * [如何使用](#ONTID_如何使用)
     * [快速集成](#ONTID_快速集成)
-* [DEMO](#demo)
-* [DEMO 下载地址](#DEMO_下载地址)
+* [钱包演示](#钱包演示)
+    * [钱包下载](#钱包下载)
 
-# 集成
-将工程当作module导入到项目中
+## 安装 provider sdk
+请将工程当作module导入到您的钱包项目中，交互协议请参照[CEP1文档](https://github.com/ontio-cyano/CEPs/blob/master/CEPS/CEP1.mediawiki)
 
-[数据格式请参照CEP1文档](https://github.com/ontio-cyano/CEPs/blob/master/CEPS/CEP1.mediawiki)
-
-## WALLET
+## 钱包如何集成provider sdk
 
 * 初始化
  
@@ -26,7 +25,7 @@ cyano-android-sdk 帮助Android webview和网页dapp之间通信。它对Android
 ```
 
 
-* action：login
+* 登录 action：login
 
 ```
 	cyanoWebView.getNativeJsBridge().setHandleLogin(new NativeJsBridge.HandleLogin() {
@@ -58,7 +57,7 @@ cyano-android-sdk 帮助Android webview和网页dapp之间通信。它对Android
 ```
 
 
-* action：Invoke
+* 调用合约 action：Invoke
 ```
 	cyanoWebView.getNativeJsBridge().setHandleInvoke(new NativeJsBridge.HandleInvoke() {
             @Override
@@ -81,7 +80,7 @@ cyano-android-sdk 帮助Android webview和网页dapp之间通信。它对Android
 	});
 ```
 
-* action：GetAccount
+* 获取资产账号地址action：GetAccount
 ```
 	cyanoWebView.getNativeJsBridge().setHandleGetAccount(new NativeJsBridge.HandleGetAccount() {
             @Override
@@ -98,7 +97,7 @@ cyano-android-sdk 帮助Android webview和网页dapp之间通信。它对Android
 	});
 ```
 
-* action：InvokeRead
+* 预执行合约action：InvokeRead
 ```
 	cyanoWebView.getNativeJsBridge().setHandleInvokeRead(new NativeJsBridge.HandleInvokeRead() {
             @Override
@@ -117,7 +116,7 @@ cyano-android-sdk 帮助Android webview和网页dapp之间通信。它对Android
 	});
 ```
 
-* action：InvokePasswordFree
+* 免密执行合约action：InvokePasswordFree
 ```
 	cyanoWebView.getNativeJsBridge().setHandleInvokePasswordFree(new NativeJsBridge.HandleInvokePasswordFree() {
             @Override
@@ -139,7 +138,7 @@ cyano-android-sdk 帮助Android webview和网页dapp之间通信。它对Android
             }
 	});
 ```
-* 失败返回结果
+* 执行失败返回结果
 
 
 ```
@@ -159,9 +158,11 @@ cyano-android-sdk 帮助Android webview和网页dapp之间通信。它对Android
     result：处理后的结果
 ```   
 
-[错误码](https://github.com/ontio-cyano/CEPs/blob/master/CEP1.mediawiki#Error_code)
+[错误码描述](https://github.com/ontio-cyano/CEPs/blob/master/CEP1.mediawiki#Error_code)
 
-## ONTID_如何使用
+## 钱包如何集成ONTID认证授权 (暂不支持)
+
+### ONTID_如何使用
 
 * ONT ID认证
 
@@ -269,7 +270,7 @@ cyano-android-sdk 帮助Android webview和网页dapp之间通信。它对Android
         });
 ```
 
-## ONTID_快速集成
+### ONTID_快速集成
 我们已经对ONT ID相关处理进行了封装，如果对页面没有定制话需求可以直接使用
 
 * 添加权限
@@ -352,11 +353,9 @@ ONT ID只允许创建一个
         }
 ```
 
-## DEMO
-[cyano-android](https://github.com/ontio-cyano/cyano-android)
+## 钱包演示
+[cyano-android源码](https://github.com/ontio-cyano/cyano-android)
 
-## DEMO_下载地址
 [点我下载](http://101.132.193.149/files/app-debug.apk)
 
-## 版本
-0.0.1
+
