@@ -6,9 +6,9 @@ cyano-android-sdk 帮助Android webview和网页dapp之间通信。它对Android
 
 * [安装 provider sdk](#安装-provider-sdk)
 * [钱包如何集成 provider sdk基本功能](#钱包如何集成-provider-sdk-基本功能)
-* 钱包如何集成ONTID认证授权,暂不支持
-    * [如何使用](#ONTID_如何使用)
-    * [快速集成](#ONTID_快速集成)
+* 钱包如何集成ONTID认证授权,暂不支持(#钱包如何集成ONTID认证授权,暂不支持)
+    * [如何使用](#ONTID-如何使用)
+    * [快速集成](#ONTID-快速集成)
 * [演示钱包](#演示钱包)
     * [钱包下载](#钱包下载)
 
@@ -157,12 +157,13 @@ cyano-android-sdk 帮助Android webview和网页dapp之间通信。它对Android
     
     result：处理后的结果
 ```   
+### 错误码
 
-[错误码描述](https://github.com/ontio-cyano/CEPs/blob/master/CEP1.mediawiki#Error_code)
+请参考[错误码描述](https://github.com/ontio-cyano/CEPs/blob/master/CEP1.mediawiki#Error_code)
 
 ## 钱包如何集成ONTID认证授权,暂不支持
 
-### ONTID_如何使用
+### ONTID 如何使用
 
 * ONT ID认证
 
@@ -270,7 +271,7 @@ cyano-android-sdk 帮助Android webview和网页dapp之间通信。它对Android
         });
 ```
 
-### ONTID_快速集成
+### ONTID 快速集成
 我们已经对ONT ID相关处理进行了封装，如果对页面没有定制话需求可以直接使用
 
 * 添加权限
