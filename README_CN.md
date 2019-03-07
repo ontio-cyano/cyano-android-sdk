@@ -6,7 +6,7 @@ cyano-android-sdk 帮助Android webview和网页dapp之间通信。它对Android
 
 * [安装 provider sdk](#安装-provider-sdk)
 * [钱包如何集成 provider sdk基本功能](#钱包如何集成-provider-sdk-基本功能)
-* 钱包如何集成ONTID认证授权,暂不支持(#钱包如何集成ONTID认证授权,暂不支持)
+* [钱包如何集成ONTID认证授权,暂不支持](#钱包如何集成ONTID认证授权,暂不支持)
     * [如何使用](#ONTID-如何使用)
     * [快速集成](#ONTID-快速集成)
 * [演示钱包](#演示钱包)
