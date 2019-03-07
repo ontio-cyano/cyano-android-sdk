@@ -1,22 +1,23 @@
 English | [中文](README_CN.md)
 
-# cyano-android-sdk
+# cyano-android-provider-sdk v0.0.1
 cyano-android-sdk helps to communicate between Android webview and dapp.  It encapsulates some methods for Android webview.  
 >webview communication is done by window.postmessage()
 
-* [WALLET](#WALLET)
-* ONTID   (NOT SUPPORT)
-    * [How to use](#How_to_use_ONTID)
-    * [Rapid integration](#ONTID_Rapid_integration)
-* [DEMO](#demo)
-* [Download links](#Download)
+* [Installation](#Installation)
+* [Integration provider sdk](#Integration-provider-sdk)
+* [ONTID(NOT SUPPORT)](#ONTID(NOT-SUPPORT))
+    * [How to use](#How-to-use-ONTID)
+    * [Quickly integration](#ONTID-quickly-integration)
+* [Wallet demo](#wallet-demo)
+    * [Download links](#Download)
 
-# Integrate
-Import the project as a module into the project
+## Installation
+Import the project as a module into the project, please refer to [CEP1 ](https://github.com/ontio-cyano/CEPs/blob/master/CEPS/CEP1.mediawiki) document for data format.
 
-[Refer to CEP1 document for data format](https://github.com/ontio-cyano/CEPs/blob/master/CEPS/CEP1.mediawiki)
+## Integration provider sdk
 
-## WALLET
+### Provider sdk usage 
 
 * Initialization
  
@@ -26,7 +27,7 @@ Import the project as a module into the project
 ```
 
 
-* action：login
+* login action：login
 
 ```
 	cyanoWebView.getNativeJsBridge().setHandleLogin(new NativeJsBridge.HandleLogin() {
@@ -58,7 +59,7 @@ Import the project as a module into the project
 ```
 
 
-* action：Invoke
+* invoke smartcontract action：Invoke
 ```
 	cyanoWebView.getNativeJsBridge().setHandleInvoke(new NativeJsBridge.HandleInvoke() {
             @Override
@@ -81,7 +82,7 @@ Import the project as a module into the project
 	});
 ```
 
-* action：GetAccount
+* get account of wallet action：GetAccount
 ```
 	cyanoWebView.getNativeJsBridge().setHandleGetAccount(new NativeJsBridge.HandleGetAccount() {
             @Override
@@ -98,7 +99,7 @@ Import the project as a module into the project
 	});
 ```
 
-* action：InvokeRead
+* prepare execution smartcontract action：InvokeRead
 ```
 	cyanoWebView.getNativeJsBridge().setHandleInvokeRead(new NativeJsBridge.HandleInvokeRead() {
             @Override
@@ -117,7 +118,7 @@ Import the project as a module into the project
 	});
 ```
 
-* action：InvokePasswordFree
+* invoke smartcontract with no pwassword action：InvokePasswordFree
 ```
 	cyanoWebView.getNativeJsBridge().setHandleInvokePasswordFree(new NativeJsBridge.HandleInvokePasswordFree() {
             @Override
@@ -159,9 +160,12 @@ Import the project as a module into the project
     result：The results after treatment
 ```   
 
-[Error code](https://github.com/ontio-cyano/CEPs/blob/master/CEPS/CEP1.mediawiki#error-code)
+### Error code
+Refer to [Error code](https://github.com/ontio-cyano/CEPs/blob/master/CEPS/CEP1.mediawiki#error-code)
 
-## How_to_use_ONTID
+## ONTID(NOT SUPPORT)
+
+### How to use_ONTID?
 
 * ONT ID Authentication
 
@@ -269,7 +273,7 @@ Import the project as a module into the project
         });
 ```
 
-## ONTID_Rapid_integration
+### ONTID quickly integration
 We have encapsulated the ONT ID related processing and can use it directly if there is no customized page.
 
 * add permission
@@ -351,11 +355,10 @@ Start the ONT ID interface, the private key of ONT ID, password and ONT default 
         }
 ```
 
-## DEMO
+## Wallet demo
 [cyano-android](https://github.com/ontio-cyano/cyano-android)
 
-## Download
+### Download
 [Click me to download](http://101.132.193.149/files/app-debug.apk)
 
-## version
-0.0.1
+
